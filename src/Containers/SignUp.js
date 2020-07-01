@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import './SignIn.css';
+import './SignUp.css';
 
 const defaultUser = {
   username: '',
+  email: '',
   password: '',
+  confirmation: '',
 };
 
-const SignIn = () => {
+const SignUp = () => {
   const [user, setUser] = useState(defaultUser);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
@@ -27,7 +29,7 @@ const SignIn = () => {
 
   return (
     <form className="form-signin" onSubmit={loading ? null : handleSubmit}>
-      <h2 className="text-primary">Login</h2>
+      <h2 className="text-primary">Sign Up</h2>
       <input
         className="form-control input-signin"
         name="username"
@@ -38,10 +40,28 @@ const SignIn = () => {
       />
       <input
         className="form-control input-signin"
+        name="email"
+        type="email"
+        placeholder="email"
+        value={user.email}
+        onChange={handleChange}
+        required
+      />
+      <input
+        className="form-control input-signin"
         name="password"
         type="password"
         placeholder="password"
         value={user.password}
+        onChange={handleChange}
+        required
+      />
+      <input
+        className="form-control input-signin"
+        name="confirmation"
+        type="password"
+        placeholder="confirmation"
+        value={user.confirmation}
         onChange={handleChange}
         required
       />
@@ -55,4 +75,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default SignUp;
