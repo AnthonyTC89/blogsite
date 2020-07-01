@@ -3,14 +3,16 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from '../redux/store';
 import Home from './Home';
+import SignIn from './SignIn';
 
 const App = () => (
   <Provider store={store}>
     <BrowserRouter>
       <Switch>
+        <Route path="/login" component={SignIn} exact />
         <Route path="/" component={Home} exact />
       </Switch>
-      <Redirect to="/" />
+      <Redirect to="/login" />
     </BrowserRouter>
   </Provider>
 );
