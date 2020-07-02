@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Grow from '@material-ui/core/Grow';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import './SignUp.css';
@@ -37,67 +38,69 @@ const SignUp = ({ history }) => {
   };
 
   return (
-    <form className="form-signup" onSubmit={loading ? null : handleSubmit}>
-      <button
-        className="btn bg-white"
-        type="button"
-        onClick={() => history.push('/')}
-      >
-        <img src="https://img.icons8.com/cute-clipart/64/000000/reply-arrow.png" alt="home" />
-      </button>
-      <h2 className="text-primary">Sign Up</h2>
-      <input
-        className="form-control input-signup"
-        name="username"
-        placeholder="username"
-        value={user.username}
-        onChange={handleChange}
-        required
-      />
-      <input
-        className="form-control input-signup"
-        name="email"
-        type="email"
-        placeholder="email"
-        value={user.email}
-        onChange={handleChange}
-        required
-      />
-      <input
-        className="form-control input-signup"
-        name="password"
-        type="password"
-        placeholder="password"
-        value={user.password}
-        onChange={handleChange}
-        required
-      />
-      <input
-        className="form-control input-signup"
-        name="confirmation"
-        type="password"
-        placeholder="confirmation"
-        value={user.confirmation}
-        onChange={handleChange}
-        required
-      />
-      <button className="btn btn-primary" type="submit" disabled={loading}>
-        {loading
-          ? <span className="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true" />
-          : null}
-        {loading ? 'Wait...' : 'Sign up'}
-      </button>
-      <small>{message}</small>
-      <div className="form-group">
+    <Grow in timeout={1500} appear>
+      <form className="form-signup" onSubmit={loading ? null : handleSubmit}>
         <button
-          className="btn btn-link bg-white text-primary link-signup"
+          className="btn bg-white"
           type="button"
-          onClick={() => history.push('/login')}
+          onClick={() => history.push('/')}
         >
-          You already have an account, Login!
+          <img src="https://img.icons8.com/cute-clipart/64/000000/reply-arrow.png" alt="home" />
         </button>
-      </div>
-    </form>
+        <h2 className="text-primary">Sign Up</h2>
+        <input
+          className="form-control input-signup"
+          name="username"
+          placeholder="username"
+          value={user.username}
+          onChange={handleChange}
+          required
+        />
+        <input
+          className="form-control input-signup"
+          name="email"
+          type="email"
+          placeholder="email"
+          value={user.email}
+          onChange={handleChange}
+          required
+        />
+        <input
+          className="form-control input-signup"
+          name="password"
+          type="password"
+          placeholder="password"
+          value={user.password}
+          onChange={handleChange}
+          required
+        />
+        <input
+          className="form-control input-signup"
+          name="confirmation"
+          type="password"
+          placeholder="confirmation"
+          value={user.confirmation}
+          onChange={handleChange}
+          required
+        />
+        <button className="btn btn-primary" type="submit" disabled={loading}>
+          {loading
+            ? <span className="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true" />
+            : null}
+          {loading ? 'Wait...' : 'Sign up'}
+        </button>
+        <small>{message}</small>
+        <div className="form-group">
+          <button
+            className="btn btn-link bg-white text-primary link-signup"
+            type="button"
+            onClick={() => history.push('/login')}
+          >
+            You already have an account, Login!
+          </button>
+        </div>
+      </form>
+    </Grow>
   );
 };
 
