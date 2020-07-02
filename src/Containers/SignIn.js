@@ -28,6 +28,13 @@ const SignIn = ({ history }) => {
 
   return (
     <form className="form-signin" onSubmit={loading ? null : handleSubmit}>
+      <button
+        className="btn bg-white"
+        type="button"
+        onClick={() => history.push('/')}
+      >
+        <img src="https://img.icons8.com/cute-clipart/64/000000/reply-arrow.png" alt="home" />
+      </button>
       <h2 className="text-primary">Login</h2>
       <input
         className="form-control input-signin"
