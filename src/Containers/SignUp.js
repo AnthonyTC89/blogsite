@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import './SignUp.css';
 
 const defaultUser = {
@@ -21,11 +22,18 @@ const SignUp = ({ history }) => {
     ));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setMessage('');
-    setLoading(false);
+    try {
+      await axios.post('/api/users', user);
+      setLoading(false);
+      setUser(defaultUser);
+    } catch (err) {
+      setMessage('Error!');
+      setLoading(false);
+    }
   };
 
   return (
