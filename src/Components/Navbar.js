@@ -10,7 +10,13 @@ const Navbar = ({ history, session, changeSession }) => (
       <span className="navbar-toggler-icon" />
     </button>
     <div>
-      <span> BlogSite </span>
+      <button
+        className="btn btn-link bg-white text-primary link-navbar"
+        type="button"
+        onClick={() => history.push('/')}
+      >
+        Home
+      </button>
     </div>
     <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div className="navbar-nav">
@@ -27,6 +33,13 @@ const Navbar = ({ history, session, changeSession }) => (
           onClick={() => history.push('/login')}
         >
           Login
+        </button>
+        <button
+          className="btn btn-link bg-white text-primary link-navbar"
+          type="button"
+          onClick={() => history.push('/dashboard')}
+        >
+          Dashboard
         </button>
       </div>
     </div>
