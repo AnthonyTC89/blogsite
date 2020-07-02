@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import './SignUp.css';
 
 const defaultUser = {
@@ -8,7 +9,7 @@ const defaultUser = {
   confirmation: '',
 };
 
-const SignUp = () => {
+const SignUp = ({ history }) => {
   const [user, setUser] = useState(defaultUser);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
@@ -66,13 +67,27 @@ const SignUp = () => {
         required
       />
       <button className="btn btn-primary" type="submit" disabled={loading}>
-        {loading ? <span className="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true" />
+        {loading
+          ? <span className="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true" />
           : null}
-        {loading ? 'Espere...' : 'Login'}
+        {loading ? 'Wait...' : 'Sign up'}
       </button>
       <small>{message}</small>
+      <div className="form-group">
+        <button
+          className="btn bg-white text-primary btn-link"
+          type="button"
+          onClick={() => history.push('/login')}
+        >
+          You already have an account, Login!
+        </button>
+      </div>
     </form>
   );
+};
+
+SignUp.propTypes = {
+  history: PropTypes.object.isRequired,
 };
 
 export default SignUp;

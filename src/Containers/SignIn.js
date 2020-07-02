@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import './SignIn.css';
 
 const defaultUser = {
@@ -6,7 +7,7 @@ const defaultUser = {
   password: '',
 };
 
-const SignIn = () => {
+const SignIn = ({ history }) => {
   const [user, setUser] = useState(defaultUser);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
@@ -46,13 +47,27 @@ const SignIn = () => {
         required
       />
       <button className="btn btn-primary" type="submit" disabled={loading}>
-        {loading ? <span className="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true" />
+        {loading
+          ? <span className="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true" />
           : null}
-        {loading ? 'Espere...' : 'Login'}
+        {loading ? 'Wait...' : 'Login'}
       </button>
       <small>{message}</small>
+      <div className="form-group">
+        <button
+          className="btn bg-white text-primary btn-link"
+          type="button"
+          onClick={() => history.push('/signup')}
+        >
+          Don&apos;t have and account, Sign up!
+        </button>
+      </div>
     </form>
   );
+};
+
+SignIn.propTypes = {
+  history: PropTypes.object.isRequired,
 };
 
 export default SignIn;

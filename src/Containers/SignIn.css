@@ -8,9 +8,13 @@
   align-items: center;
   justify-content: center;
   margin: auto;
-  max-width: 15rem;
+  width: 15rem;
 }
 
 .input-signin {
   margin: 0.2rem;
+}
+
+.btn-link {
+  font-size: small;
 }
