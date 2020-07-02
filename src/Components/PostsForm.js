@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import Grow from '@material-ui/core/Grow';
+import icons from '../icons.json';
 import './PostsForm.css';
 
 const defaultPost = {
@@ -9,8 +11,8 @@ const defaultPost = {
   text: '',
 };
 
-const PostsForm = () => {
-  const [post, setPost] = useState(defaultPost);
+const PostsForm = ({ item, handleForm }) => {
+  const [post, setPost] = useState(item);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
   const btnText = post.id === null ? 'Create' : 'Update';
@@ -42,6 +44,13 @@ const PostsForm = () => {
   return (
     <Grow in timeout={1500}>
       <form className="form-posts" onSubmit={loading ? null : handleSubmit}>
+        <button
+          className="btn bg-white"
+          type="button"
+          onClick={handleForm}
+        >
+          <img src={icons.back} alt="back" />
+        </button>
         <h3 className="text-primary">Post</h3>
         <input
           className="form-control input-posts"
@@ -70,6 +79,11 @@ const PostsForm = () => {
       </form>
     </Grow>
   );
+};
+
+PostsForm.propTypes = {
+  handleForm: PropTypes.func.isRequired,
+  item: PropTypes.object.isRequired,
 };
 
 export default PostsForm;

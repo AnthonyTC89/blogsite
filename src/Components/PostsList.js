@@ -1,10 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { v4 as uuidv4 } from 'uuid';
+import Grow from '@material-ui/core/Grow';
+import PostsForm from './PostsForm';
+import icons from '../icons.json';
+import './PostsList.css';
+
+const defaultPost = {
+  id: null,
+  title: '',
+  text: '',
+};
 
 const PostsList = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState('');
+  const [showForm, setShowForm] = useState(false);
+  const [editItem, setEditItem] = useState(defaultPost);
 
   const getPosts = async () => {
     setLoading(true);
@@ -22,6 +35,15 @@ const PostsList = () => {
     }
   };
 
+  const handleEdit = (item) => {
+    setEditItem(item);
+    setShowForm(true);
+  };
+
+  const handleForm = () => {
+    setShowForm(!showForm);
+  };
+
   useEffect(() => {
     getPosts();
     // eslint-disable-next-line
@@ -36,33 +58,47 @@ const PostsList = () => {
       </div>
     );
   }
-  if (posts.length === 0) {
-    return (
-      <div className="container text-center">
-        <h4>
-          {message}
-        </h4>
-      </div>
-    );
+  if (showForm || posts.length === 0) {
+    return <PostsForm item={editItem} handleForm={handleForm} />;
   }
   return (
-    <div className="container text-center">
-      <h3> My posts </h3>
-      <div className="row">
+    <Grow in timeout={1500}>
+      <div className="container text-center">
+        <h2> My posts </h2>
+        <p>{message}</p>
+        <button
+          className="btn bg-white"
+          type="button"
+          onClick={handleForm}
+        >
+          <img className="icon-posts" src={icons.add} alt="add" />
+        </button>
         {posts.map((post) => (
-          <div className="card col-3">
+          <div key={uuidv4()} className="row card post-card">
+            <h3 className="card-header">{post.title}</h3>
             <div className="card-body">
-              <h5 className="card-title">
-                {post.title}
-              </h5>
               <p className="card-text">
                 {post.text}
               </p>
             </div>
+            <button
+              className="btn bg-light btn-edit"
+              type="button"
+              onClick={() => handleEdit(post)}
+            >
+              <img className="icon-posts" src={icons.edit} alt="edit" />
+            </button>
+            <button
+              className="btn bg-light btn-remove"
+              type="button"
+              onClick={handleForm}
+            >
+              <img className="icon-posts" src={icons.remove} alt="remove" />
+            </button>
           </div>
         ))}
       </div>
-    </div>
+    </Grow>
   );
 };
 
