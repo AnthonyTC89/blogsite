@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import Grow from '@material-ui/core/Grow';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import updateSession from '../redux/actions/updateSession';
 import './SignIn.css';
 
 const defaultUser = {
@@ -92,4 +94,14 @@ SignIn.propTypes = {
   history: PropTypes.object.isRequired,
 };
 
-export default SignIn;
+const mapStateToProps = (state) => ({
+  session: state.session,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  changeSession: (session) => dispatch(updateSession(session)),
+});
+
+const SignInWrapper = connect(mapStateToProps, mapDispatchToProps)(SignIn);
+
+export default SignInWrapper;
