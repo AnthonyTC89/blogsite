@@ -4,6 +4,7 @@ const morgan = require('morgan');
 // const path = require('path');
 
 const usersRoutes = require('./routes/users');
+const postsRoutes = require('./routes/posts');
 
 // eslint-disable-next-line
 const { mongoose } = require('./database');
@@ -19,7 +20,7 @@ app.use(express.json());
 
 // Routes
 app.use(usersRoutes);
-
+app.use(postsRoutes);
 // Static Files
 // const index = path.join(__dirname, '../build');
 // app.use(express.static(index));

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import Grow from '@material-ui/core/Grow';
 import './PostsForm.css';
 
@@ -25,18 +26,22 @@ const PostsForm = () => {
     e.preventDefault();
     setLoading(true);
     setMessage('');
+    try {
+      const res = post.id == null
+        ? await axios.post('/api/posts/', post)
+        : await axios.put(`/api/posts/${post.id}`, post);
+      setMessage(res.statusText);
+      setPost(defaultPost);
+    } catch (err) {
+      setMessage('error!');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <Grow in timeout={1500}>
       <form className="form-posts" onSubmit={loading ? null : handleSubmit}>
-        {/* <button
-          className="btn bg-white"
-          type="button"
-          onClick={() => history.push('/')}
-        >
-          <img src="https://img.icons8.com/cute-clipart/64/000000/reply-arrow.png" alt="home" />
-        </button> */}
         <h3 className="text-primary">Post</h3>
         <input
           className="form-control input-posts"

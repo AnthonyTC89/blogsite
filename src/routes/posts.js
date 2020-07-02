@@ -10,7 +10,7 @@ router.get('/api/posts', async (req, res) => {
 
 router.post('/api/posts', async (req, res) => {
   const { title, text } = req.body;
-  const post = await Post.insert(
+  const post = new Post(
     {
       title,
       text,
@@ -18,6 +18,7 @@ router.post('/api/posts', async (req, res) => {
       created_at: Date.now(),
     },
   );
+  await post.save();
   res.json({ status: 'OK', post });
 });
 
