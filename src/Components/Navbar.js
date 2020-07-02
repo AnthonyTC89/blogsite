@@ -32,9 +32,9 @@ const Navbar = ({ history, session, changeSession }) => (
     </div>
     <div>
       <span>
-        {session.user === null ? 'User' : session.user.username}
+        {session.isLoggedIn ? session.user.username : 'User' }
       </span>
-      {session.user === null ? null : (
+      {session.isLoggedIn ? (
         <button
           className="btn bg-white"
           type="button"
@@ -46,7 +46,7 @@ const Navbar = ({ history, session, changeSession }) => (
             alt="logout"
           />
         </button>
-      )}
+      ) : null}
     </div>
   </nav>
 );
