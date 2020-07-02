@@ -15,4 +15,14 @@ router.post('/api/users', async (req, res) => {
   res.json({ status: 'OK' });
 });
 
+router.post('/api/users/login', async (req, res) => {
+  const { username, password } = req.body;
+  const users = await User.find();
+  if (users.some((user) => user.username === username && user.password === password)) {
+    res.json({ status: 'OK' });
+  } else {
+    res.json({ status: 'Error' });
+  }
+});
+
 module.exports = router;

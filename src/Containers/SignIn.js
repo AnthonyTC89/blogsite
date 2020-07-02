@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Grow from '@material-ui/core/Grow';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import './SignIn.css';
 
 const defaultUser = {
@@ -20,11 +21,22 @@ const SignIn = ({ history }) => {
     ));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setMessage('');
-    setLoading(false);
+    try {
+      const res = await axios.post('/api/users/login', user);
+      setLoading(false);
+      if (res.data.status === 'OK') {
+        setUser(defaultUser);
+      } else {
+        setMessage('Error!');
+      }
+    } catch (err) {
+      setMessage('Error!');
+      setLoading(false);
+    }
   };
 
   return (
