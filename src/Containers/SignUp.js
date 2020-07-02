@@ -29,7 +29,7 @@ const SignUp = ({ history }) => {
   };
 
   return (
-    <form className="form-signin" onSubmit={loading ? null : handleSubmit}>
+    <form className="form-signup" onSubmit={loading ? null : handleSubmit}>
       <button
         className="btn bg-white"
         type="button"
@@ -39,7 +39,7 @@ const SignUp = ({ history }) => {
       </button>
       <h2 className="text-primary">Sign Up</h2>
       <input
-        className="form-control input-signin"
+        className="form-control input-signup"
         name="username"
         placeholder="username"
         value={user.username}
@@ -47,7 +47,7 @@ const SignUp = ({ history }) => {
         required
       />
       <input
-        className="form-control input-signin"
+        className="form-control input-signup"
         name="email"
         type="email"
         placeholder="email"
@@ -56,7 +56,7 @@ const SignUp = ({ history }) => {
         required
       />
       <input
-        className="form-control input-signin"
+        className="form-control input-signup"
         name="password"
         type="password"
         placeholder="password"
@@ -65,7 +65,7 @@ const SignUp = ({ history }) => {
         required
       />
       <input
-        className="form-control input-signin"
+        className="form-control input-signup"
         name="confirmation"
         type="password"
         placeholder="confirmation"
@@ -82,7 +82,7 @@ const SignUp = ({ history }) => {
       <small>{message}</small>
       <div className="form-group">
         <button
-          className="btn bg-white text-primary btn-link"
+          className="btn btn-link bg-white text-primary link-signup"
           type="button"
           onClick={() => history.push('/login')}
         >
