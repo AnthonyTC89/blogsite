@@ -21,7 +21,7 @@ router.post('/api/users/login', async (req, res) => {
   if (users.length === 0) {
     res.json({ status: 'Error' });
   } else {
-    res.json({ status: 'OK' });
+    res.json({ status: 'OK', user: users[0] });
   }
 });
 

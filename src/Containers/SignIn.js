@@ -11,7 +11,7 @@ const defaultUser = {
   password: '',
 };
 
-const SignIn = ({ history }) => {
+const SignIn = ({ history, changeSession }) => {
   const [user, setUser] = useState(defaultUser);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
@@ -32,6 +32,7 @@ const SignIn = ({ history }) => {
       setLoading(false);
       if (res.data.status === 'OK') {
         setUser(defaultUser);
+        changeSession(res.data.user);
       } else {
         setMessage('Error!');
       }
@@ -92,6 +93,7 @@ const SignIn = ({ history }) => {
 
 SignIn.propTypes = {
   history: PropTypes.object.isRequired,
+  changeSession: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
