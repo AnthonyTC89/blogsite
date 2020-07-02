@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const PostsList = () => {
   const [posts, setPosts] = useState([]);
@@ -7,9 +8,18 @@ const PostsList = () => {
 
   const getPosts = async () => {
     setLoading(true);
-    setMessage("You don't have posts");
-    setPosts([]);
-    setLoading(false);
+    setMessage('');
+    try {
+      const res = await axios.get('/api/posts');
+      setPosts(res.data);
+      if (res.data.length === 0) {
+        setMessage("You don't have posts");
+      }
+    } catch (err) {
+      setMessage('error!');
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
