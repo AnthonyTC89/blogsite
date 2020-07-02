@@ -10,7 +10,15 @@ router.get('/api/users', async (req, res) => {
 
 router.post('/api/users', async (req, res) => {
   const { username, email, password } = req.body;
-  const user = new User({ username, email, password, status: true });
+  const user = new User(
+    {
+      username,
+      email,
+      password,
+      status: true,
+      created_at: Date.now(),
+    },
+  );
   await user.save();
   res.json({ status: 'OK' });
 });
