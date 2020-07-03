@@ -5,17 +5,11 @@ import Grow from '@material-ui/core/Grow';
 import icons from '../icons.json';
 import './PostsForm.css';
 
-const defaultPost = {
-  id: null,
-  title: '',
-  text: '',
-};
-
 const PostsForm = ({ item, handleForm }) => {
   const [post, setPost] = useState(item);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
-  const btnText = post.id === null ? 'Create' : 'Update';
+  const btnText = post._id === null ? 'Create' : 'Update';
 
   const handleChange = (e) => {
     e.persist();
@@ -29,11 +23,10 @@ const PostsForm = ({ item, handleForm }) => {
     setLoading(true);
     setMessage('');
     try {
-      const res = post.id == null
+      const res = post._id == null
         ? await axios.post('/api/posts/', post)
-        : await axios.put(`/api/posts/${post.id}`, post);
+        : await axios.put(`/api/posts/${post._id}`, post);
       setMessage(res.statusText);
-      setPost(defaultPost);
     } catch (err) {
       setMessage('error!');
     } finally {

@@ -7,7 +7,7 @@ import icons from '../icons.json';
 import './PostsList.css';
 
 const defaultPost = {
-  id: null,
+  _id: null,
   title: '',
   text: '',
 };
@@ -69,7 +69,7 @@ const PostsList = () => {
         <button
           className="btn bg-white"
           type="button"
-          onClick={handleForm}
+          onClick={() => handleEdit(defaultPost)}
         >
           <img className="icon-posts" src={icons.add} alt="add" />
         </button>
