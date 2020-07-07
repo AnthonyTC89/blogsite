@@ -19,7 +19,7 @@ router.post('/api/posts', async (req, res) => {
     },
   );
   await post.save();
-  res.json({ status: 'OK', post });
+  res.json({ status: 'Created', post });
 });
 
 router.put('/api/posts/:id', async (req, res) => {
@@ -28,7 +28,13 @@ router.put('/api/posts/:id', async (req, res) => {
   const { id } = req.params;
 
   const post = await Post.findByIdAndUpdate(id, newPost);
-  res.json({ status: 'OK', post });
+  res.json({ status: 'Updated', post });
+});
+
+router.delete('/api/posts/:id', async (req, res) => {
+  const { id } = req.params;
+  await Post.findByIdAndRemove(id);
+  res.json({ status: 'Removed' });
 });
 
 module.exports = router;
