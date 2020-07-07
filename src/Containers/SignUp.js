@@ -30,7 +30,7 @@ const SignUp = ({ history }) => {
     try {
       await axios.post('/api/users', user);
       setLoading(false);
-      setUser(defaultUser);
+      history.push('/dashboard');
     } catch (err) {
       setMessage('Error!');
       setLoading(false);

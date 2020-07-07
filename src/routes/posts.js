@@ -9,12 +9,13 @@ router.get('/api/posts', async (req, res) => {
 });
 
 router.post('/api/posts', async (req, res) => {
-  const { title, text } = req.body;
+  const { title, text, userID } = req.body;
   const post = new Post(
     {
       title,
       text,
       status: true,
+      userID,
       created_at: Date.now(),
     },
   );
@@ -23,8 +24,8 @@ router.post('/api/posts', async (req, res) => {
 });
 
 router.put('/api/posts/:id', async (req, res) => {
-  const { title, text, status } = req.body;
-  const newPost = { title, text, status };
+  const { title, text, status, userID } = req.body;
+  const newPost = { title, text, status, userID };
   const { id } = req.params;
   const post = await Post.findByIdAndUpdate(id, newPost);
   res.json(post);

@@ -33,6 +33,7 @@ const SignIn = ({ history, changeSession }) => {
       if (res.data.status === 'OK') {
         setUser(defaultUser);
         changeSession(res.data.user);
+        history.push('/dashboard');
       } else {
         setMessage('Error!');
       }
