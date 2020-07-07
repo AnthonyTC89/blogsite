@@ -26,6 +26,7 @@ const PostsForm = ({ item, handleForm }) => {
       const res = post._id == null
         ? await axios.post('/api/posts/', post)
         : await axios.put(`/api/posts/${post._id}`, post);
+      setPost(res.data);
       setMessage(res.statusText);
     } catch (err) {
       setMessage('error!');

@@ -40,8 +40,9 @@ const PostsList = () => {
     setShowForm(true);
   };
 
-  const handleForm = () => {
+  const handleForm = async () => {
     setShowForm(!showForm);
+    await getPosts();
   };
 
   const handleDelete = async (item) => {
