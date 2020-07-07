@@ -44,8 +44,8 @@ const PostsList = ({ session }) => {
   };
 
   const handleForm = async () => {
-    setShowForm(!showForm);
     await getPosts();
+    setShowForm(!showForm);
   };
 
   const handleDelete = async (item) => {
@@ -76,7 +76,7 @@ const PostsList = ({ session }) => {
       </div>
     );
   }
-  if (showForm || posts.length === 0) {
+  if (showForm) {
     return <PostsForm item={editItem} handleForm={handleForm} />;
   }
   return (
