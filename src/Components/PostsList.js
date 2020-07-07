@@ -44,6 +44,20 @@ const PostsList = () => {
     setShowForm(!showForm);
   };
 
+  const handleDelete = async (item) => {
+    setLoading(true);
+    setMessage('');
+    try {
+      const res = await axios.delete(`/api/posts/${item._id}`);
+      setMessage(res.statusText);
+      await getPosts();
+    } catch (err) {
+      setMessage('error!');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     getPosts();
     // eslint-disable-next-line
@@ -91,7 +105,7 @@ const PostsList = () => {
             <button
               className="btn bg-light btn-remove"
               type="button"
-              onClick={handleForm}
+              onClick={() => handleDelete(post)}
             >
               <img className="icon-posts" src={icons.remove} alt="remove" />
             </button>

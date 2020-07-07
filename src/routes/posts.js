@@ -26,7 +26,6 @@ router.put('/api/posts/:id', async (req, res) => {
   const { title, text, status } = req.body;
   const newPost = { title, text, status };
   const { id } = req.params;
-
   const post = await Post.findByIdAndUpdate(id, newPost);
   res.json({ status: 'Updated', post });
 });
