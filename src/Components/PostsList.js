@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 import Grow from '@material-ui/core/Grow';
@@ -12,7 +14,7 @@ const defaultPost = {
   text: '',
 };
 
-const PostsList = () => {
+const PostsList = ({ session }) => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState('');
@@ -23,7 +25,8 @@ const PostsList = () => {
     setLoading(true);
     setMessage('');
     try {
-      const res = await axios.get('/api/posts');
+      const { user } = session;
+      const res = await axios.get('/api/posts', user);
       setPosts(res.data);
       if (res.data.length === 0) {
         setMessage("You don't have posts");
@@ -117,4 +120,14 @@ const PostsList = () => {
   );
 };
 
-export default PostsList;
+PostsList.propTypes = {
+  session: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  session: state.session,
+});
+
+const PostsListWrapper = connect(mapStateToProps, null)(PostsList);
+
+export default PostsListWrapper;

@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import Grow from '@material-ui/core/Grow';
 import icons from '../icons.json';
 import './PostsForm.css';
 
-const PostsForm = ({ item, handleForm }) => {
+const PostsForm = ({ item, handleForm, session }) => {
   const [post, setPost] = useState(item);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
@@ -34,6 +35,15 @@ const PostsForm = ({ item, handleForm }) => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (post.userID == null) {
+      setPost((prev) => (
+        { ...prev, userID: session.user._id }
+      ));
+    }
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <Grow in timeout={1500}>
@@ -78,6 +88,13 @@ const PostsForm = ({ item, handleForm }) => {
 PostsForm.propTypes = {
   handleForm: PropTypes.func.isRequired,
   item: PropTypes.object.isRequired,
+  session: PropTypes.object.isRequired,
 };
 
-export default PostsForm;
+const mapStateToProps = (state) => ({
+  session: state.session,
+});
+
+const PostsFormWrapper = connect(mapStateToProps, null)(PostsForm);
+
+export default PostsFormWrapper;
