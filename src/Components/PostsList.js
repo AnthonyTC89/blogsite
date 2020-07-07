@@ -26,7 +26,7 @@ const PostsList = ({ session }) => {
     setMessage('');
     try {
       const { user } = session;
-      const res = await axios.get('/api/posts', user);
+      const res = await axios.get('/api/posts', { params: { userID: user._id } }, { timeout: 5000 });
       setPosts(res.data);
       if (res.data.length === 0) {
         setMessage("You don't have posts");

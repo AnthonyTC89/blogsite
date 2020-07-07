@@ -4,8 +4,14 @@ const router = express.Router();
 const Post = require('../models/Post');
 
 router.get('/api/posts', async (req, res) => {
-  const posts = await Post.find();
-  res.json(posts);
+  if (req.query.userID) {
+    const { userID } = req.query;
+    const posts = await Post.find({ userID });
+    res.json(posts);
+  } else {
+    const posts = await Post.find();
+    res.json(posts);
+  }
 });
 
 router.post('/api/posts', async (req, res) => {

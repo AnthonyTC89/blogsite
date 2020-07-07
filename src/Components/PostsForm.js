@@ -24,7 +24,6 @@ const PostsForm = ({ item, handleForm, session }) => {
     setLoading(true);
     setMessage('');
     try {
-      console.log(post);
       const res = post._id == null
         ? await axios.post('/api/posts/', post, { timeout: 5000 })
         : await axios.put(`/api/posts/${post._id}`, post, { timeout: 5000 });

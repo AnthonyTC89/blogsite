@@ -1,5 +1,8 @@
 const defaultSession = {
-  user: null,
+  user: {
+    _id: null,
+    username: '',
+  },
   isLoggedIn: false,
 };
 
