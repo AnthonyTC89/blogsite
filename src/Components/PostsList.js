@@ -52,7 +52,7 @@ const PostsList = ({ session }) => {
     setLoading(true);
     setMessage('');
     try {
-      const res = await axios.delete(`/api/posts/${item._id}`);
+      const res = await axios.delete(`/api/posts/${item._id}`, { timeout: 5000 });
       setMessage(res.statusText);
       await getPosts();
     } catch (err) {

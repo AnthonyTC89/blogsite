@@ -9,17 +9,21 @@ router.get('/api/users', async (req, res) => {
 });
 
 router.post('/api/users', async (req, res) => {
-  const { username, email, password } = req.body;
-  const user = new User(
-    {
-      username,
-      email,
-      password,
-      status: true,
-    },
-  );
-  await user.save();
-  res.json({ status: 'OK' });
+  try {
+    const { username, email, password } = req.body;
+    const user = new User(
+      {
+        username,
+        email,
+        password,
+        status: true,
+      },
+    );
+    await user.save();
+    res.json({ status: 'OK' });
+  } catch (err) {
+    res.json({ status: 'error' });
+  }
 });
 
 router.post('/api/users/login', async (req, res) => {

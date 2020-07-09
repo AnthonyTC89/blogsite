@@ -28,7 +28,7 @@ const SignUp = ({ history }) => {
     setLoading(true);
     setMessage('');
     try {
-      await axios.post('/api/users', user);
+      await axios.post('/api/users', user, { timeout: 5000 });
       setLoading(false);
       history.push('/dashboard');
     } catch (err) {
