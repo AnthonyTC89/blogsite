@@ -16,7 +16,6 @@ router.post('/api/users', async (req, res) => {
       email,
       password,
       status: true,
-      created_at: Date.now(),
     },
   );
   await user.save();
