@@ -5,8 +5,7 @@ const PostSchema = new Schema({
   title: { type: String, required: true },
   text: { type: String, required: true },
   status: { type: Boolean, required: true },
-  created_at: { type: Date, required: true },
   userID: { type: String, required: true },
-}, { collection: 'posts' });
+}, { collection: 'posts', timestamps: true });
 
 module.exports = mongoose.model('Post', PostSchema);
