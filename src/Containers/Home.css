@@ -1,0 +1,13 @@
+.home-row {
+  padding: 2rem;
+}
+
+.home-column {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-phone {
+  max-height: 30rem;
+}
