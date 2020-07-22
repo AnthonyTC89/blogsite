@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
 import Grow from '@material-ui/core/Grow';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import updateSession from '../redux/actions/updateSession';
-import './SignIn.css';
+import './SignUp.css';
 
 const defaultUser = {
   username: '',
+  email: '',
   password: '',
+  confirmation: '',
 };
 
-const SignIn = ({ history, changeSession }) => {
+const SignUp = ({ history, handleComponent }) => {
   const [user, setUser] = useState(defaultUser);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
@@ -28,15 +28,9 @@ const SignIn = ({ history, changeSession }) => {
     setLoading(true);
     setMessage('');
     try {
-      const res = await axios.post('/api/users/login', user);
+      await axios.post('/api/users', user, { timeout: 5000 });
       setLoading(false);
-      if (res.data.status === 'OK') {
-        setUser(defaultUser);
-        changeSession(res.data.user);
-        history.push('/dashboard');
-      } else {
-        setMessage('Error!');
-      }
+      history.push('/dashboard');
     } catch (err) {
       setMessage('Error!');
       setLoading(false);
@@ -44,18 +38,11 @@ const SignIn = ({ history, changeSession }) => {
   };
 
   return (
-    <Grow in timeout={1500}>
-      <form className="form-signin" onSubmit={loading ? null : handleSubmit}>
-        <button
-          className="btn bg-white"
-          type="button"
-          onClick={() => history.push('/')}
-        >
-          <img src="https://img.icons8.com/cute-clipart/64/000000/reply-arrow.png" alt="home" />
-        </button>
-        <h2 className="text-primary">Login</h2>
+    <Grow in timeout={1500} appear>
+      <form className="form-signup" onSubmit={loading ? null : handleSubmit}>
+        <h2 className="text-primary">Sign Up</h2>
         <input
-          className="form-control input-signin"
+          className="form-control input-signup"
           name="username"
           placeholder="username"
           value={user.username}
@@ -63,7 +50,16 @@ const SignIn = ({ history, changeSession }) => {
           required
         />
         <input
-          className="form-control input-signin"
+          className="form-control input-signup"
+          name="email"
+          type="email"
+          placeholder="email"
+          value={user.email}
+          onChange={handleChange}
+          required
+        />
+        <input
+          className="form-control input-signup"
           name="password"
           type="password"
           placeholder="password"
@@ -71,20 +67,29 @@ const SignIn = ({ history, changeSession }) => {
           onChange={handleChange}
           required
         />
+        <input
+          className="form-control input-signup"
+          name="confirmation"
+          type="password"
+          placeholder="confirmation"
+          value={user.confirmation}
+          onChange={handleChange}
+          required
+        />
         <button className="btn btn-primary" type="submit" disabled={loading}>
           {loading
             ? <span className="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true" />
             : null}
-          {loading ? 'Wait...' : 'Login'}
+          {loading ? 'Wait...' : 'Sign up'}
         </button>
         <small>{message}</small>
         <div className="form-group">
           <button
-            className="btn bg-white text-primary btn-link"
+            className="btn btn-link bg-white text-primary link-signup"
             type="button"
-            onClick={() => history.push('/signup')}
+            onClick={handleComponent}
           >
-            Don&apos;t have and account, Sign up!
+            You already have an account, Login!
           </button>
         </div>
       </form>
@@ -92,19 +97,9 @@ const SignIn = ({ history, changeSession }) => {
   );
 };
 
-SignIn.propTypes = {
+SignUp.propTypes = {
   history: PropTypes.object.isRequired,
-  changeSession: PropTypes.func.isRequired,
+  handleComponent: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  session: state.session,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  changeSession: (session) => dispatch(updateSession(session)),
-});
-
-const SignInWrapper = connect(mapStateToProps, mapDispatchToProps)(SignIn);
-
-export default SignInWrapper;
+export default SignUp;
