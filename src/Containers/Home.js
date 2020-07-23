@@ -20,7 +20,7 @@ const Home = ({ history }) => {
       <div className="row home-row">
         <picture className="col-md-6 home-picture">
           <img src={srcPhone} alt="home-phone" className="home-phone" />
-          <img src={Images[1]} alt="home-img" className="home-img" />
+          <img src={Images[0]} alt="home-img" className="home-img" />
         </picture>
         <div className="col-md-6 home-component">
           {showSignIn ? <SignIn history={history} handleComponent={handleComponent} />

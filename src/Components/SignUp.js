@@ -82,7 +82,7 @@ const SignUp = ({ history, handleComponent }) => {
             : null}
           {loading ? 'Wait...' : 'Sign up'}
         </button>
-        <small>{message}</small>
+        <small className="text-danger">{message}</small>
         <div className="form-group">
           <button
             className="btn btn-link bg-white text-dark link-signup"

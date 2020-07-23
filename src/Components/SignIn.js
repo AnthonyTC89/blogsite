@@ -70,7 +70,7 @@ const SignIn = ({ history, changeSession, handleComponent }) => {
             : null}
           {loading ? 'Wait...' : 'Login'}
         </button>
-        <small>{message}</small>
+        <small className="text-danger">{message}</small>
         <div className="form-group">
           <button
             className="btn bg-white text-dark btn-link"
