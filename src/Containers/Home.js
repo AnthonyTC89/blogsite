@@ -3,24 +3,26 @@ import PropTypes from 'prop-types';
 import SignIn from '../Components/SignIn';
 import SignUp from '../Components/SignUp';
 import srcPhone from '../Images/phone.png';
+import { InfoHome } from '../Info.json';
 import './Home.css';
 
 const Home = ({ history }) => {
   const [showSignIn, setShowSignIn] = useState(true);
-
+  const { Images } = InfoHome;
   const handleComponent = () => {
     setShowSignIn(!showSignIn);
   };
 
-  // const srcImg = 'https://cdn.pixabay.com/photo/2015/09/17/14/24/guitar-944262_960_720.jpg';
+  // const srcImg = '';
 
   return (
     <div className="container">
       <div className="row home-row">
-        <picture className="col-md-6 home-column home-picture">
-          <img src={srcPhone} alt="home-img" className="home-phone" />
+        <picture className="col-md-6 home-picture">
+          <img src={srcPhone} alt="home-phone" className="home-phone" />
+          <img src={Images[1]} alt="home-img" className="home-img" />
         </picture>
-        <div className="col-md-6 home-column">
+        <div className="col-md-6 home-component">
           {showSignIn ? <SignIn history={history} handleComponent={handleComponent} />
             : <SignUp history={history} handleComponent={handleComponent} />}
         </div>

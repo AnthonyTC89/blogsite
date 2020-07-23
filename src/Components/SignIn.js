@@ -46,7 +46,7 @@ const SignIn = ({ history, changeSession, handleComponent }) => {
   return (
     <Grow in timeout={1500}>
       <form className="form-signin" onSubmit={loading ? null : handleSubmit}>
-        <h2 className="text-primary">Login</h2>
+        <h2 className="text-dark">Login</h2>
         <input
           className="form-control input-signin"
           name="username"
@@ -64,7 +64,7 @@ const SignIn = ({ history, changeSession, handleComponent }) => {
           onChange={handleChange}
           required
         />
-        <button className="btn btn-primary" type="submit" disabled={loading}>
+        <button className="btn btn-dark" type="submit" disabled={loading}>
           {loading
             ? <span className="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true" />
             : null}
@@ -73,7 +73,7 @@ const SignIn = ({ history, changeSession, handleComponent }) => {
         <small>{message}</small>
         <div className="form-group">
           <button
-            className="btn bg-white text-primary btn-link"
+            className="btn bg-white text-dark btn-link"
             type="button"
             onClick={handleComponent}
           >
