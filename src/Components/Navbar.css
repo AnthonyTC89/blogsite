@@ -1,3 +1,8 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+}
+
 .link-navbar {
   margin: 0.2rem;
 }

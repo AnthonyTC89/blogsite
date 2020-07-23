@@ -30,7 +30,7 @@ const SignUp = ({ history, handleComponent }) => {
     try {
       await axios.post('/api/users', user, { timeout: 5000 });
       setLoading(false);
-      history.push('/dashboard');
+      history.push('/posts');
     } catch (err) {
       setMessage('Error!');
       setLoading(false);

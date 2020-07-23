@@ -1,65 +1,46 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import updateSession from '../redux/actions/updateSession';
 import './Navbar.css';
 
-const Navbar = ({ history, session, changeSession }) => (
-  <nav className="navbar navbar-expand-lg navbar-light bg-light">
-    <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-      <span className="navbar-toggler-icon" />
-    </button>
+const Navbar = ({ history, session, handleLogout }) => (
+  <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div>
+      <span>
+        {session.user.username || 'User'}
+      </span>
+    </div>
     <div>
       <button
-        className="btn btn-link bg-white text-primary link-navbar"
+        className="btn bg-white"
         type="button"
-        onClick={() => history.push('/')}
+        onClick={handleLogout}
+      >
+        My Posts
+      </button>
+      <button
+        className="btn bg-white"
+        type="button"
+        onClick={handleLogout}
       >
         Home
       </button>
-    </div>
-    <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div className="navbar-nav">
-        <button
-          className="btn btn-link bg-white text-primary link-navbar"
-          type="button"
-          onClick={() => history.push('/signup')}
-        >
-          Sign up
-        </button>
-        <button
-          className="btn btn-link bg-white text-primary link-navbar"
-          type="button"
-          onClick={() => history.push('/login')}
-        >
-          Login
-        </button>
-        <button
-          className="btn btn-link bg-white text-primary link-navbar"
-          type="button"
-          onClick={() => history.push('/dashboard')}
-        >
-          Dashboard
-        </button>
-      </div>
+      <button
+        className="btn bg-white"
+        type="button"
+        onClick={() => history.push('/profile')}
+      >
+        Profile
+      </button>
     </div>
     <div>
-      <span>
-        {session.isLoggedIn ? session.user.username : 'User' }
-      </span>
-      {session.isLoggedIn ? (
-        <button
-          className="btn bg-white"
-          type="button"
-          onClick={() => changeSession(null)}
-        >
-          <img
-            className="icon-navbar"
-            src="https://img.icons8.com/color/48/000000/logout-rounded-left--v1.png"
-            alt="logout"
-          />
-        </button>
-      ) : null}
+      <button
+        className="btn bg-white"
+        type="button"
+        onClick={handleLogout}
+      >
+        Logout
+      </button>
     </div>
   </nav>
 );
@@ -67,17 +48,13 @@ const Navbar = ({ history, session, changeSession }) => (
 Navbar.propTypes = {
   history: PropTypes.object.isRequired,
   session: PropTypes.object.isRequired,
-  changeSession: PropTypes.func.isRequired,
+  handleLogout: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   session: state.session,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  changeSession: (session) => dispatch(updateSession(session)),
-});
-
-const NavbarWrapper = connect(mapStateToProps, mapDispatchToProps)(Navbar);
+const NavbarWrapper = connect(mapStateToProps, null)(Navbar);
 
 export default NavbarWrapper;
