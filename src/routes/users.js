@@ -22,7 +22,7 @@ router.post('/api/users', async (req, res) => {
     await user.save();
     res.json({ status: 'OK' });
   } catch (err) {
-    res.json({ status: 'error' });
+    res.status(404).json({ status: 'error' });
   }
 });
 
@@ -30,7 +30,7 @@ router.post('/api/users/login', async (req, res) => {
   const { username, password } = req.body;
   const users = await User.find({ username, password });
   if (users.length === 0) {
-    res.json({ status: 'Error' });
+    res.status(404).json({ status: 'Error' });
   } else {
     res.json({ status: 'OK', user: users[0] });
   }
