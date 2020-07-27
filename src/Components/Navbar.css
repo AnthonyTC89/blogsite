@@ -1,15 +1,11 @@
-.navbar {
-  /* display: flex;
-  justify-content: space-between; */
-}
 .navbar-collapse {
   justify-content: flex-end;
 }
+.nav-link {
+  text-transform: capitalize;
+}
 .link-navbar {
   margin: 0.2rem;
-}
-.icon-navbar {
-  width: 2rem;
 }
 .active {
   border: 1px solid white;

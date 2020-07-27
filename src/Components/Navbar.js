@@ -1,35 +1,24 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { v4 as uuidv4 } from 'uuid';
 import updateSession from '../redux/actions/updateSession';
-
+import updateNavbar from '../redux/actions/updateNavbar';
 import './Navbar.css';
 
-const navItemsDefault = [
-  { name: 'profile', active: true },
-  { name: 'posts', active: false },
-  { name: 'logout', active: false },
-];
-
-const navItemsInactive = [
-  { name: 'profile', active: false },
-  { name: 'posts', active: false },
-  { name: 'logout', active: false },
-];
-
-const Navbar = ({ history, session, changeSession }) => {
-  const [navItems, setNavItems] = useState(navItemsDefault);
-
+const Navbar = ({ history, session, navbar, changeNavbar, changeSession }) => {
   const handleActive = (link) => {
-    const index = navItemsInactive.findIndex((item) => item.name === link);
-    const auxItems = [...navItemsInactive];
+    const auxItems = [...navbar];
+    // eslint-disable-next-line
+    auxItems.forEach((item) => item.active = false);
+    const index = navbar.findIndex((item) => item.link === link);
     auxItems[index] = { ...auxItems[index], active: true };
-    setNavItems(auxItems);
+    changeNavbar(auxItems);
   };
 
   const handleLink = (link) => {
     if (link === 'logout') {
+      handleActive('profile');
       changeSession(null);
       history.push('/');
     } else {
@@ -46,12 +35,12 @@ const Navbar = ({ history, session, changeSession }) => {
       </button>
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav ml-auto">
-          {navItems.map((item) => (
-            <li className="nav-item">
+          {navbar.map((item) => (
+            <li key={uuidv4()} className="nav-item">
               <button
                 type="button"
                 className={item.active ? 'btn nav-link active' : 'btn nav-link'}
-                onClick={() => handleLink(item.name)}
+                onClick={() => handleLink(item.link)}
               >
                 {item.name}
               </button>
@@ -66,15 +55,19 @@ const Navbar = ({ history, session, changeSession }) => {
 Navbar.propTypes = {
   history: PropTypes.object.isRequired,
   session: PropTypes.object.isRequired,
+  navbar: PropTypes.array.isRequired,
   changeSession: PropTypes.func.isRequired,
+  changeNavbar: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   session: state.session,
+  navbar: state.navbar,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   changeSession: (session) => dispatch(updateSession(session)),
+  changeNavbar: (nav) => dispatch(updateNavbar(nav)),
 });
 
 const NavbarWrapper = connect(mapStateToProps, mapDispatchToProps)(Navbar);

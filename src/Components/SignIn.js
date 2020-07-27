@@ -33,7 +33,7 @@ const SignIn = ({ history, changeSession, handleComponent }) => {
       if (res.data.status === 'OK') {
         setUser(defaultUser);
         changeSession(res.data.user);
-        history.push('/posts');
+        history.push('/profile');
       } else {
         setMessage('Error!');
       }
