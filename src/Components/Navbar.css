@@ -1,11 +1,19 @@
 .navbar {
-  display: flex;
-  justify-content: space-between;
+  /* display: flex;
+  justify-content: space-between; */
 }
-
+.navbar-collapse {
+  justify-content: flex-end;
+}
 .link-navbar {
   margin: 0.2rem;
 }
 .icon-navbar {
   width: 2rem;
+}
+.active {
+  border: 1px solid white;
+}
+.btn:focus {
+  box-shadow: none;
 }
