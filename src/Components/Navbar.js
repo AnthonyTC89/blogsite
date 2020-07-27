@@ -5,11 +5,10 @@ import './Navbar.css';
 
 const Navbar = ({ history, session, handleLogout }) => (
   <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div>
-      <span>
-        {session.user.username || 'User'}
-      </span>
-    </div>
+    <span className="navbar-brand">{`Blogsite - ${session.user.username}`}</span>
+    <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span className="navbar-toggler-icon" />
+    </button>
     <div>
       <button
         className="btn bg-white"
