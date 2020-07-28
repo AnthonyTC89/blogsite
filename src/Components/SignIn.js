@@ -4,6 +4,7 @@ import Grow from '@material-ui/core/Grow';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import updateSession from '../redux/actions/updateSession';
+import FacebookButton from './FacebookButton';
 import './SignIn.css';
 
 const defaultUser = {
@@ -79,6 +80,9 @@ const SignIn = ({ history, changeSession, handleComponent }) => {
           >
             Don&apos;t have and account, Sign up!
           </button>
+        </div>
+        <div className="form-group">
+          <FacebookButton />
         </div>
       </form>
     </Grow>
