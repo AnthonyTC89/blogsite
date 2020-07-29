@@ -13,8 +13,11 @@ const FacebookButton = () => {
   return (
     <FacebookLogin
       appId={process.env.REACT_APP_FACEBOOK_KEY}
-      autoLoad
       fields="name,email,picture"
+      size="small"
+      textButton=""
+      icon="fa-facebook"
+      cssClass="btn btn-primary"
       onClick={componentClicked}
       callback={responseFacebook}
     />

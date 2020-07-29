@@ -81,6 +81,7 @@ const SignIn = ({ history, changeSession, handleComponent }) => {
             Don&apos;t have and account, Sign up!
           </button>
         </div>
+        <h6>Connect with</h6>
         <div className="form-group">
           <FacebookButton />
         </div>
