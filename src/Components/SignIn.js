@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import updateSession from '../redux/actions/updateSession';
 import FacebookButton from './FacebookButton';
+import GoogleButton from './GoogleButton';
 import './SignIn.css';
 
 const defaultUser = {
@@ -82,8 +83,9 @@ const SignIn = ({ history, changeSession, handleComponent }) => {
           </button>
         </div>
         <h6>Connect with</h6>
-        <div className="form-group">
-          <FacebookButton />
+        <div className="form-group social-login">
+          <FacebookButton textButton="Login with Facebook" />
+          <GoogleButton buttonText="Login with Google" />
         </div>
       </form>
     </Grow>

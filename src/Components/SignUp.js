@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import Grow from '@material-ui/core/Grow';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import FacebookButton from './FacebookButton';
+import GoogleButton from './GoogleButton';
 import './SignUp.css';
 
 const defaultUser = {
@@ -91,6 +93,10 @@ const SignUp = ({ history, handleComponent }) => {
           >
             You already have an account, Login!
           </button>
+        </div>
+        <div className="form-group social-login">
+          <FacebookButton textButton="Sign up with Facebook" />
+          <GoogleButton buttonText="Sign up with Google" />
         </div>
       </form>
     </Grow>

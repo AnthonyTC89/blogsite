@@ -13,3 +13,11 @@
 .btn-link {
   font-size: small;
 }
+
+.social-login {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 5.5rem;
+}
