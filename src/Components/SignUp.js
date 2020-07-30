@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Grow from '@material-ui/core/Grow';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import jwt from 'jsonwebtoken';
 import FacebookButton from './FacebookButton';
 import GoogleButton from './GoogleButton';
 import './SignUp.css';
@@ -30,7 +31,10 @@ const SignUp = ({ history, handleComponent }) => {
     setLoading(true);
     setMessage('');
     try {
-      await axios.post('/api/users', user, { timeout: 5000 });
+      const token = jwt.sign(user, process.env.REACT_APP_JWT_SECRET);
+      console.log('token: ', token);
+      const res = await axios.post('/api/users', { token }, { timeout: 5000 });
+      console.log('res: ', res);
       setLoading(false);
       history.push('/posts');
     } catch (err) {

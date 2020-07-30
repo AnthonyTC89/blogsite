@@ -1,4 +1,5 @@
 const express = require('express');
+const jwt = require('jsonwebtoken');
 
 const router = express.Router();
 const User = require('../models/User');
@@ -10,7 +11,12 @@ router.get('/api/users', async (req, res) => {
 
 router.post('/api/users', async (req, res) => {
   try {
-    const { username, email, password } = req.body;
+    console.log('req.body: ', req.body);
+    const { token } = req.body;
+    console.log('token: ', token);
+    const decoded = jwt.verify(token, 'secret');
+    console.log('decoded: ', decoded);
+    const { username, email, password } = decoded;
     const user = new User(
       {
         username,
@@ -20,9 +26,9 @@ router.post('/api/users', async (req, res) => {
       },
     );
     await user.save();
-    res.json({ status: 'OK' });
+    res.status(201).send(token);
   } catch (err) {
-    res.status(404).json({ status: 'error' });
+    res.sendStatus(404);
   }
 });
 

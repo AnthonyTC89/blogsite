@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react';
 import GoogleLogin from 'react-google-login';
 import PropTypes from 'prop-types';

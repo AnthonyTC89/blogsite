@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Grow from '@material-ui/core/Grow';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import jwt from 'jsonwebtoken';
 import updateSession from '../redux/actions/updateSession';
 import FacebookButton from './FacebookButton';
 import GoogleButton from './GoogleButton';
@@ -29,8 +30,9 @@ const SignIn = ({ history, changeSession, handleComponent }) => {
     e.preventDefault();
     setLoading(true);
     setMessage('');
+    // const token = jwt.sign(user, process.env.REACT_APP_JWT_SECRET);
     try {
-      const res = await axios.post('/api/users/login', user);
+      const res = await axios.post('/api/users/login', user, { timeout: 5000 });
       setLoading(false);
       if (res.data.status === 'OK') {
         setUser(defaultUser);
