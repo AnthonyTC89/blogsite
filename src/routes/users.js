@@ -1,5 +1,6 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 
 const router = express.Router();
 const User = require('../models/User');
@@ -11,17 +12,15 @@ router.get('/api/users', async (req, res) => {
 
 router.post('/api/users', async (req, res) => {
   try {
-    console.log('req.body: ', req.body);
     const { token } = req.body;
-    console.log('token: ', token);
-    const decoded = jwt.verify(token, 'secret');
-    console.log('decoded: ', decoded);
+    const decoded = jwt.verify(token, process.env.REACT_APP_JWT_SECRET);
     const { username, email, password } = decoded;
+    const salt = bcrypt.genSaltSync(10);
     const user = new User(
       {
         username,
         email,
-        password,
+        password: bcrypt.hashSync(password, salt),
         status: true,
       },
     );
@@ -33,7 +32,9 @@ router.post('/api/users', async (req, res) => {
 });
 
 router.post('/api/users/login', async (req, res) => {
-  const { username, password } = req.body;
+  const { token } = req.body;
+  const decoded = jwt.verify(token, process.env.REACT_APP_JWT_SECRET);
+  const { username, password } = decoded;
   const users = await User.find({ username, password });
   if (users.length === 0) {
     res.status(404).json({ status: 'Error' });
