@@ -33,6 +33,7 @@ const SignUp = ({ history, handleComponent }) => {
     try {
       const token = jwt.sign(user, process.env.REACT_APP_JWT_SECRET);
       const res = await axios.post('/api/users', { token }, { timeout: 5000 });
+      console.log('res.data: ', res.data);
       setMessage(res.statusText);
       setLoading(false);
       history.push('/posts');

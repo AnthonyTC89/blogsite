@@ -30,17 +30,14 @@ const SignIn = ({ history, changeSession, handleComponent }) => {
     e.preventDefault();
     setLoading(true);
     setMessage('');
-    // const token = jwt.sign(user, process.env.REACT_APP_JWT_SECRET);
     try {
-      const res = await axios.post('/api/users/login', user, { timeout: 5000 });
+      const token = jwt.sign(user, process.env.REACT_APP_JWT_SECRET);
+      const res = await axios.post('/api/users/login', { token }, { timeout: 5000 });
+      console.log(res);
       setLoading(false);
-      if (res.data.status === 'OK') {
-        setUser(defaultUser);
-        changeSession(res.data.user);
-        history.push('/posts');
-      } else {
-        setMessage('Error!');
-      }
+      setUser(defaultUser);
+      changeSession(res.data.user);
+      history.push('/posts');
     } catch (err) {
       setMessage('Error!');
       setLoading(false);

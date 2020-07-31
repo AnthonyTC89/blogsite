@@ -25,7 +25,8 @@ router.post('/api/users', async (req, res) => {
       },
     );
     await user.save();
-    res.status(201).send(token);
+    const userToken = jwt.sign(user.toObject(), process.env.REACT_APP_JWT_SECRET);
+    res.status(201).send(userToken);
   } catch (err) {
     res.sendStatus(404);
   }
@@ -35,12 +36,24 @@ router.post('/api/users/login', async (req, res) => {
   const { token } = req.body;
   const decoded = jwt.verify(token, process.env.REACT_APP_JWT_SECRET);
   const { username, password } = decoded;
-  const users = await User.find({ username, password });
-  if (users.length === 0) {
-    res.status(404).json({ status: 'Error' });
+  const user = await User.findOne({ username });
+  if (user === null) {
+    res.sendStatus(404);
   } else {
-    res.json({ status: 'OK', user: users[0] });
+    const validPassword = await bcrypt.compare(password, user.password);
+    if (validPassword) {
+      const userToken = jwt.sign(user.toObject(), process.env.REACT_APP_JWT_SECRET);
+      res.status(202).send(userToken);
+    } else {
+      res.sendStatus(401);
+    }
   }
+  // if (users.length === 0) {
+  //   const newToken = jwt.sign(users[0], process.env.REACT_APP_JWT_SECRET);
+  //   res.status(202).send(newToken);
+  // } else {
+  //   res.sendStatus(401);
+  // }
 });
 
 module.exports = router;
