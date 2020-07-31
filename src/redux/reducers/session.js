@@ -1,18 +1,15 @@
 const defaultSession = {
-  user: {
-    _id: null,
-    username: 'default',
-  },
+  token: '',
   isLoggedIn: false,
 };
 
-const session = (state = defaultSession, { type, user }) => {
+const session = (state = defaultSession, { type, token }) => {
   switch (type) {
     case 'UPDATE_SESSION':
-      if (user === null) {
+      if (token === null) {
         return defaultSession;
       }
-      return { user, isLoggedIn: true };
+      return { token, isLoggedIn: true };
     default:
       return state;
   }

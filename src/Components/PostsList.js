@@ -26,7 +26,11 @@ const PostsList = ({ session }) => {
     setLoading(true);
     setMessage('');
     try {
-      const res = await axios.get('/api/posts', { timeout: 5000 });
+      const config = {
+        timeout: 5000,
+        headers: { Authorization: `Bearer ${session.token}` },
+      };
+      const res = await axios.get('/api/posts', config);
       setPosts(res.data);
       if (res.data.length === 0) {
         setMessage("You don't have posts");

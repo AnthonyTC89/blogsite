@@ -1,9 +1,10 @@
 const express = require('express');
 
 const router = express.Router();
+const verifyToken = require('../Controllers/verifyToken');
 const Post = require('../models/Post');
 
-router.get('/api/posts', async (req, res) => {
+router.get('/api/posts', verifyToken, async (req, res) => {
   if (req.query.userID) {
     const { userID } = req.query;
     const posts = await Post.find({ userID });

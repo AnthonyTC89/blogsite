@@ -6,6 +6,7 @@ import updateSession from '../redux/actions/updateSession';
 import updateNavbar from '../redux/actions/updateNavbar';
 import './Navbar.css';
 
+// eslint-disable-next-line no-unused-vars
 const Navbar = ({ history, session, navbar, changeNavbar, changeSession }) => {
   const handleActive = (link) => {
     const auxItems = [...navbar];
@@ -35,7 +36,7 @@ const Navbar = ({ history, session, navbar, changeNavbar, changeSession }) => {
 
   return (
     <nav className="navbar navbar-expand-md navbar-dark bg-dark">
-      <span className="navbar-brand">{`Blogsite - ${session.user.username}`}</span>
+      <span className="navbar-brand">Blogsite</span>
       <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span className="navbar-toggler-icon" />
       </button>
