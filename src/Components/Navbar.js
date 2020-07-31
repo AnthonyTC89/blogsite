@@ -25,7 +25,7 @@ const Navbar = ({ history, session, navbar, changeNavbar, changeSession }) => {
   const handleLink = (link) => {
     if (link === 'logout') {
       removeStorage();
-      handleActive('profile');
+      handleActive('posts');
       changeSession(null);
       history.push('/');
     } else {

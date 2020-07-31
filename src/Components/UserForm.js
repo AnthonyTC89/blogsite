@@ -1,13 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import jwt from 'jsonwebtoken';
 import Grow from '@material-ui/core/Grow';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import Gravatar from './Gravatar';
+import updateSession from '../redux/actions/updateSession';
 import './UserForm.css';
 
+const defaultUser = {
+  username: '',
+  email: '',
+};
+
 const UserForm = ({ session }) => {
-  const [user, setUser] = useState(session.user);
+  const [user, setUser] = useState(defaultUser);
+  const [loadingPage, setLoadingPage] = useState(true);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
 
@@ -32,15 +40,52 @@ const UserForm = ({ session }) => {
     if (!validUser()) return;
     setLoading(true);
     try {
-      await axios.put('/api/users', user, { timeout: 5000 });
+      const config = {
+        timeout: 5000,
+        headers: { Authorization: `Bearer ${session.token}` },
+      };
+      const userToken = jwt.sign(user, process.env.REACT_APP_JWT_SECRET);
+      const res = await axios.put(`/api/users/${user._id}`, { userToken }, config);
       setLoading(false);
-      setMessage('Updated!');
+      setMessage(res.statusText);
     } catch (err) {
       setMessage('Error!');
       setLoading(false);
     }
   };
 
+  const getUserInfo = async () => {
+    try {
+      const config = {
+        timeout: 5000,
+        headers: { Authorization: `Bearer ${session.token}` },
+      };
+      const userSession = jwt.verify(session.token, process.env.REACT_APP_JWT_SECRET);
+      const res = await axios.get(`/api/users/${userSession._id}`, config);
+      const userData = jwt.verify(res.data, process.env.REACT_APP_JWT_SECRET);
+      const { _id, username, email, status } = userData;
+      setUser({ _id, username, email, status, password: '', confirmation: '' });
+      setLoadingPage(false);
+    } catch (err) {
+      setMessage('Error!');
+      setLoadingPage(false);
+    }
+  };
+
+  useEffect(() => {
+    getUserInfo();
+    // eslint-disable-next-line
+  }, []);
+
+  if (loadingPage) {
+    return (
+      <div className="container text-center">
+        <div className="spinner-border text-primary" role="status">
+          <span className="sr-only">Loading...</span>
+        </div>
+      </div>
+    );
+  }
   return (
     <Grow in timeout={1500} appear>
       <form className="form-user" onSubmit={loading ? null : handleSubmit}>
@@ -103,6 +148,10 @@ const mapStateToProps = (state) => ({
   session: state.session,
 });
 
-const UserFormWrapper = connect(mapStateToProps, null)(UserForm);
+const mapDispatchToProps = (dispatch) => ({
+  changeSession: (token) => dispatch(updateSession(token)),
+});
+
+const UserFormWrapper = connect(mapStateToProps, mapDispatchToProps)(UserForm);
 
 export default UserFormWrapper;

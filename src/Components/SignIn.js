@@ -36,8 +36,8 @@ const SignIn = ({ history, changeSession, handleComponent }) => {
     setLoading(true);
     setMessage('');
     try {
-      const token = jwt.sign(user, process.env.REACT_APP_JWT_SECRET);
-      const res = await axios.post('/api/users/login', { token }, { timeout: 5000 });
+      const userToken = jwt.sign(user, process.env.REACT_APP_JWT_SECRET);
+      const res = await axios.post('/api/users/login', { userToken }, { timeout: 5000 });
       sessionStorage.setItem('userToken', res.data);
       if (rememberMe) {
         localStorage.setItem('userToken', res.data);

@@ -33,8 +33,8 @@ const SignUp = ({ history, handleComponent, changeSession }) => {
     setLoading(true);
     setMessage('');
     try {
-      const token = jwt.sign(user, process.env.REACT_APP_JWT_SECRET);
-      const res = await axios.post('/api/users', { token }, { timeout: 5000 });
+      const userToken = jwt.sign(user, process.env.REACT_APP_JWT_SECRET);
+      const res = await axios.post('/api/users', { userToken }, { timeout: 5000 });
       sessionStorage.setItem('userToken', res.data);
       setLoading(false);
       setUser(defaultUser);
