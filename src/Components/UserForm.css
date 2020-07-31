@@ -1,8 +1,11 @@
-.form-user {
+.form-profile {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   margin: 3rem auto;
   width: 15rem;
+}
+.input-profile {
+  margin: 0.2rem auto;
 }

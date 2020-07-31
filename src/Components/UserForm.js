@@ -88,11 +88,11 @@ const UserForm = ({ session }) => {
   }
   return (
     <Grow in timeout={1500} appear>
-      <form className="form-user" onSubmit={loading ? null : handleSubmit}>
+      <form className="form-profile" onSubmit={loading ? null : handleSubmit}>
         <Gravatar user={user} />
         <h2 className="text-dark">Profile</h2>
         <input
-          className="form-control input-user"
+          className="form-control input-profile"
           name="username"
           placeholder="username"
           value={user.username}
@@ -101,7 +101,7 @@ const UserForm = ({ session }) => {
           disabled
         />
         <input
-          className="form-control input-user"
+          className="form-control input-profile"
           name="email"
           type="email"
           placeholder="email"
@@ -110,7 +110,7 @@ const UserForm = ({ session }) => {
           required
         />
         <input
-          className="form-control input-signup"
+          className="form-control input-profile"
           name="password"
           type="password"
           placeholder="password"
@@ -119,7 +119,7 @@ const UserForm = ({ session }) => {
           required
         />
         <input
-          className="form-control input-signup"
+          className="form-control input-profile"
           name="confirmation"
           type="password"
           placeholder="confirmation"
