@@ -16,6 +16,7 @@ const defaultUser = {
 
 const SignIn = ({ history, changeSession, handleComponent }) => {
   const [user, setUser] = useState(defaultUser);
+  const [rememberMe, setRememberMe] = useState(false);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
 
@@ -26,6 +27,10 @@ const SignIn = ({ history, changeSession, handleComponent }) => {
     ));
   };
 
+  const handleChangeCheckbox = () => {
+    setRememberMe(!rememberMe);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -34,6 +39,9 @@ const SignIn = ({ history, changeSession, handleComponent }) => {
       const token = jwt.sign(user, process.env.REACT_APP_JWT_SECRET);
       const res = await axios.post('/api/users/login', { token }, { timeout: 5000 });
       sessionStorage.setItem('userToken', res.data);
+      if (rememberMe) {
+        localStorage.setItem('userToken', res.data);
+      }
       setLoading(false);
       setUser(defaultUser);
       changeSession(res.data);
@@ -51,7 +59,8 @@ const SignIn = ({ history, changeSession, handleComponent }) => {
       changeSession(userToken);
       history.push('/posts');
     } catch (err) {
-      // without actions
+      sessionStorage.clear();
+      localStorage.clear();
     }
   };
 
@@ -81,6 +90,17 @@ const SignIn = ({ history, changeSession, handleComponent }) => {
           onChange={handleChange}
           required
         />
+        <div className="custom-control custom-checkbox checkbox-signin">
+          <input
+            type="checkbox"
+            className="custom-control-input"
+            id="customCheck1"
+            name="customCheck1"
+            checked={rememberMe}
+            onChange={handleChangeCheckbox}
+          />
+          <label className="custom-control-label" htmlFor="customCheck1">Remember me</label>
+        </div>
         <button className="btn btn-dark" type="submit" disabled={loading}>
           {loading
             ? <span className="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true" />
