@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import Grow from '@material-ui/core/Grow';
 import PropTypes from 'prop-types';
@@ -33,16 +33,32 @@ const SignIn = ({ history, changeSession, handleComponent }) => {
     try {
       const token = jwt.sign(user, process.env.REACT_APP_JWT_SECRET);
       const res = await axios.post('/api/users/login', { token }, { timeout: 5000 });
-      console.log(res);
+      sessionStorage.setItem('userToken', res.data);
       setLoading(false);
       setUser(defaultUser);
-      changeSession(res.data.user);
+      changeSession(res.data);
       history.push('/posts');
     } catch (err) {
       setMessage('Error!');
       setLoading(false);
     }
   };
+
+  const checkStorage = () => {
+    try {
+      const userToken = sessionStorage.getItem('userToken') || localStorage.getItem('userToken');
+      jwt.verify(userToken, process.env.REACT_APP_JWT_SECRET);
+      changeSession(userToken);
+      history.push('/posts');
+    } catch (err) {
+      // without actions
+    }
+  };
+
+  useEffect(() => {
+    checkStorage();
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <Grow in timeout={1500}>

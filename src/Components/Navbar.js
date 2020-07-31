@@ -16,8 +16,14 @@ const Navbar = ({ history, session, navbar, changeNavbar, changeSession }) => {
     changeNavbar(auxItems);
   };
 
+  const removeStorage = () => {
+    sessionStorage.clear();
+    localStorage.clear();
+  };
+
   const handleLink = (link) => {
     if (link === 'logout') {
+      removeStorage();
       handleActive('profile');
       changeSession(null);
       history.push('/');

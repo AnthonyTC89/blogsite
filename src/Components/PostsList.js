@@ -14,6 +14,7 @@ const defaultPost = {
   text: '',
 };
 
+// eslint-disable-next-line no-unused-vars
 const PostsList = ({ session }) => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -25,8 +26,7 @@ const PostsList = ({ session }) => {
     setLoading(true);
     setMessage('');
     try {
-      const { user } = session;
-      const res = await axios.get('/api/posts', { params: { userID: user._id } }, { timeout: 5000 });
+      const res = await axios.get('/api/posts', { timeout: 5000 });
       setPosts(res.data);
       if (res.data.length === 0) {
         setMessage("You don't have posts");

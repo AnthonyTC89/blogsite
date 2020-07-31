@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import Grow from '@material-ui/core/Grow';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
+import Grow from '@material-ui/core/Grow';
+import updateSession from '../redux/actions/updateSession';
 import FacebookButton from './FacebookButton';
 import GoogleButton from './GoogleButton';
 import './SignUp.css';
@@ -14,7 +16,7 @@ const defaultUser = {
   confirmation: '',
 };
 
-const SignUp = ({ history, handleComponent }) => {
+const SignUp = ({ history, handleComponent, changeSession }) => {
   const [user, setUser] = useState(defaultUser);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
@@ -33,9 +35,10 @@ const SignUp = ({ history, handleComponent }) => {
     try {
       const token = jwt.sign(user, process.env.REACT_APP_JWT_SECRET);
       const res = await axios.post('/api/users', { token }, { timeout: 5000 });
-      console.log('res.data: ', res.data);
-      setMessage(res.statusText);
+      sessionStorage.setItem('userToken', res.data);
       setLoading(false);
+      setUser(defaultUser);
+      changeSession(res.data);
       history.push('/posts');
     } catch (err) {
       setMessage('Error!');
@@ -109,7 +112,18 @@ const SignUp = ({ history, handleComponent }) => {
 
 SignUp.propTypes = {
   history: PropTypes.object.isRequired,
+  changeSession: PropTypes.func.isRequired,
   handleComponent: PropTypes.func.isRequired,
 };
 
-export default SignUp;
+const mapStateToProps = (state) => ({
+  session: state.session,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  changeSession: (session) => dispatch(updateSession(session)),
+});
+
+const SignUpWrapper = connect(mapStateToProps, mapDispatchToProps)(SignUp);
+
+export default SignUpWrapper;
