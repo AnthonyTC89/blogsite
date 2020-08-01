@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import jwt from 'jsonwebtoken';
 import Grow from '@material-ui/core/Grow';
 import icons from '../icons.json';
 import './PostsForm.css';
@@ -37,9 +38,10 @@ const PostsForm = ({ item, handleForm, session }) => {
   };
 
   useEffect(() => {
-    if (post.userID == null) {
+    if (post.user_id == null) {
+      const userSession = jwt.verify(session.token, process.env.REACT_APP_JWT_SECRET);
       setPost((prev) => (
-        { ...prev, userID: session.user._id }
+        { ...prev, user_id: userSession._id }
       ));
     }
     // eslint-disable-next-line
@@ -55,7 +57,7 @@ const PostsForm = ({ item, handleForm, session }) => {
         >
           <img src={icons.back} alt="back" />
         </button>
-        <h3 className="text-primary">Post</h3>
+        <h3 className="text-dark">Post</h3>
         <input
           className="form-control input-posts"
           name="title"
@@ -73,7 +75,7 @@ const PostsForm = ({ item, handleForm, session }) => {
           onChange={handleChange}
           required
         />
-        <button className="btn btn-primary" type="submit" disabled={loading}>
+        <button className="btn btn-dark" type="submit" disabled={loading}>
           {loading
             ? <span className="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true" />
             : null}

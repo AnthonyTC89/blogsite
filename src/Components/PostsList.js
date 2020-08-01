@@ -81,7 +81,7 @@ const PostsList = ({ session }) => {
   }
   return (
     <Grow in timeout={1500}>
-      <div className="container text-center">
+      <div className="container text-center container-posts">
         <h2> My posts </h2>
         {loading ? <LoadingGif /> : null}
         <p>{message}</p>
