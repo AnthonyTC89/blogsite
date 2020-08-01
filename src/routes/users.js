@@ -34,6 +34,25 @@ router.post('/api/users', async (req, res) => {
   }
 });
 
+router.post('/api/users/facebook', async (req, res) => {
+  try {
+    const { userToken } = req.body;
+    const decoded = jwt.verify(userToken, process.env.REACT_APP_JWT_SECRET);
+    const { username, email } = decoded;
+    const user = await User.findOne({ email });
+    if (user) {
+      const token = jwt.sign(user.toObject(), process.env.REACT_APP_JWT_SECRET);
+      res.status(200).send(token);
+    } else {
+      const newUser = await User.create({ username, email });
+      const token = jwt.sign(newUser.toObject(), process.env.REACT_APP_JWT_SECRET);
+      res.status(201).send(token);
+    }
+  } catch (err) {
+    res.sendStatus(404);
+  }
+});
+
 router.put('/api/users/:id', verifyToken, async (req, res) => {
   try {
     const { id } = req.params;

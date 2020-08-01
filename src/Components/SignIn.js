@@ -14,7 +14,7 @@ const defaultUser = {
   password: '',
 };
 
-const SignIn = ({ history, changeSession, handleComponent }) => {
+const SignIn = ({ session, history, changeSession, handleComponent }) => {
   const [user, setUser] = useState(defaultUser);
   const [rememberMe, setRememberMe] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -32,14 +32,13 @@ const SignIn = ({ history, changeSession, handleComponent }) => {
     setMessage('');
     try {
       const { name, email } = response;
-      const userFacebook = { username: name, email, password: '' };
+      const userFacebook = { username: name, email };
       const userToken = jwt.sign(userFacebook, process.env.REACT_APP_JWT_SECRET);
-      const res = await axios.post('/api/users', { userToken }, { timeout: 5000 });
+      const res = await axios.post('/api/users/facebook', { userToken }, { timeout: 5000 });
       sessionStorage.setItem('userToken', res.data);
       setLoading(false);
       setUser(defaultUser);
       changeSession(res.data);
-      history.push('/posts');
     } catch (err) {
       setMessage('Error!');
       setLoading(false);
@@ -64,7 +63,6 @@ const SignIn = ({ history, changeSession, handleComponent }) => {
       setLoading(false);
       setUser(defaultUser);
       changeSession(res.data);
-      history.push('/posts');
     } catch (err) {
       setMessage('Error!');
       setLoading(false);
@@ -72,21 +70,25 @@ const SignIn = ({ history, changeSession, handleComponent }) => {
   };
 
   const checkStorage = () => {
-    try {
-      const userToken = sessionStorage.getItem('userToken') || localStorage.getItem('userToken');
-      jwt.verify(userToken, process.env.REACT_APP_JWT_SECRET);
-      changeSession(userToken);
-      history.push('/posts');
-    } catch (err) {
-      sessionStorage.clear();
-      localStorage.clear();
+    const userToken = sessionStorage.getItem('userToken') || localStorage.getItem('userToken');
+    if (userToken) {
+      try {
+        jwt.verify(userToken, process.env.REACT_APP_JWT_SECRET);
+        changeSession(userToken);
+      } catch (err) {
+        sessionStorage.clear();
+        localStorage.clear();
+      }
     }
   };
 
   useEffect(() => {
-    checkStorage();
-    // eslint-disable-next-line
-  }, []);
+    if (session.isLoggedIn) {
+      history.push('/posts');
+    } else {
+      checkStorage();
+    }
+  });
 
   return (
     <Grow in timeout={1500}>
@@ -147,6 +149,7 @@ const SignIn = ({ history, changeSession, handleComponent }) => {
 };
 
 SignIn.propTypes = {
+  session: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   changeSession: PropTypes.func.isRequired,
   handleComponent: PropTypes.func.isRequired,
