@@ -118,7 +118,7 @@ const SignUp = ({ history, session, handleComponent, changeSession }) => {
         <small className="text-danger">{message}</small>
         <div className="form-group">
           <button
-            className="btn btn-link bg-white text-dark link-signup"
+            className="btn btn-link text-dark"
             type="button"
             onClick={handleComponent}
           >

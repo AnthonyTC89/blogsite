@@ -28,7 +28,7 @@ const PostsList = ({ session }) => {
     setLoadingPage(true);
     setMessage('');
     try {
-      const config = { timeout: 5000, headers: { Authorization: `Bearer ${session.token}` } };
+      const config = { timeout: 10000, headers: { Authorization: `Bearer ${session.token}` } };
       const res = await axios.get('/api/posts', config);
       setPosts(res.data);
       if (res.data.length === 0) {

@@ -10,6 +10,7 @@
   margin: 0.2rem;
 }
 
-.link-signup {
+.btn-link {
   font-size: small;
+  font-weight: 500;
 }

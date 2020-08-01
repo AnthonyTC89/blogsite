@@ -137,7 +137,7 @@ const SignIn = ({ session, history, changeSession, handleComponent }) => {
         <small className="text-danger">{message}</small>
         <div className="form-group">
           <button
-            className="btn bg-white text-dark btn-link"
+            className="btn text-dark btn-link"
             type="button"
             onClick={handleComponent}
           >

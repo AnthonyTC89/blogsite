@@ -71,7 +71,7 @@ const PostsForm = ({ item, handleForm, session }) => {
         <textarea
           className="form-control input-posts"
           name="text"
-          rows={5}
+          rows={8}
           placeholder="text"
           value={post.text}
           onChange={handleChange}

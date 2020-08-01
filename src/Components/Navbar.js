@@ -35,7 +35,7 @@ const Navbar = ({ history, session, navbar, changeNavbar, changeSession }) => {
   };
 
   return (
-    <nav className="navbar navbar-expand-md navbar-dark bg-dark">
+    <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
       <span className="navbar-brand">Blogsite</span>
       <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span className="navbar-toggler-icon" />
