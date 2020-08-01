@@ -9,20 +9,19 @@ import './Home.css';
 const Home = ({ history }) => {
   const [showSignIn, setShowSignIn] = useState(true);
   const { Images } = InfoHome;
+
   const handleComponent = () => {
     setShowSignIn(!showSignIn);
   };
 
-  // const srcImg = '';
-
   return (
     <div className="container">
       <div className="row home-row">
-        <picture className="col-md-6 home-picture">
+        <picture className="d-none d-sm-flex col-sm-6 home-picture">
           <img src={srcPhone} alt="home-phone" className="home-phone" />
           <img src={Images[0]} alt="home-img" className="home-img" />
         </picture>
-        <div className="col-md-6 home-component">
+        <div className="col-12 col-sm-6 justify-content-center justify-content-center justify-content-md-end home-component">
           {showSignIn ? <SignIn history={history} handleComponent={handleComponent} />
             : <SignUp history={history} handleComponent={handleComponent} />}
         </div>
