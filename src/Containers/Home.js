@@ -21,7 +21,7 @@ const Home = ({ history }) => {
           <img src={srcPhone} alt="home-phone" className="home-phone" />
           <img src={Images[0]} alt="home-img" className="home-img" />
         </picture>
-        <div className="col-12 col-sm-6 justify-content-center justify-content-center justify-content-md-end home-component">
+        <div className="col-12 col-sm-6 justify-content-center justify-content-center justify-content-md-start home-component">
           {showSignIn ? <SignIn history={history} handleComponent={handleComponent} />
             : <SignUp history={history} handleComponent={handleComponent} />}
         </div>
