@@ -28,10 +28,7 @@ const PostsList = ({ session }) => {
     setLoadingPage(true);
     setMessage('');
     try {
-      const config = {
-        timeout: 5000,
-        headers: { Authorization: `Bearer ${session.token}` },
-      };
+      const config = { timeout: 5000, headers: { Authorization: `Bearer ${session.token}` } };
       const res = await axios.get('/api/posts', config);
       setPosts(res.data);
       if (res.data.length === 0) {
@@ -58,7 +55,8 @@ const PostsList = ({ session }) => {
     setLoading(true);
     setMessage('');
     try {
-      const res = await axios.delete(`/api/posts/${item._id}`, { timeout: 5000 });
+      const config = { timeout: 5000, headers: { Authorization: `Bearer ${session.token}` } };
+      const res = await axios.delete(`/api/posts/${item._id}`, config);
       setMessage(res.statusText);
       await getPosts();
     } catch (err) {
@@ -84,7 +82,7 @@ const PostsList = ({ session }) => {
       <div className="container text-center container-posts">
         <h2> My posts </h2>
         {loading ? <LoadingGif /> : null}
-        <p>{message}</p>
+        {message === '' ? null : <p>{message}</p>}
         <button
           className="btn bg-white"
           type="button"

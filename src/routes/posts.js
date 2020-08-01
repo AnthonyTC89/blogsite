@@ -44,10 +44,14 @@ router.put('/api/posts/:id', verifyToken, async (req, res) => {
   }
 });
 
-router.delete('/api/posts/:id', async (req, res) => {
-  const { id } = req.params;
-  await Post.findByIdAndRemove(id);
-  res.json({ status: 'Removed' });
+router.delete('/api/posts/:id', verifyToken, async (req, res) => {
+  try {
+    const { id } = req.params;
+    await Post.findByIdAndRemove(id);
+    res.sendStatus(200);
+  } catch (err) {
+    res.sendStatus(400);
+  }
 });
 
 module.exports = router;

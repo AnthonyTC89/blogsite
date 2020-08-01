@@ -2,6 +2,10 @@
   margin: 3rem auto;
 }
 
+.card-header {
+  padding: 1rem 3.6rem;
+}
+
 .post-card {
   width: 20rem;
   margin: 1rem auto;
