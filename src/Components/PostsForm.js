@@ -53,7 +53,7 @@ const PostsForm = ({ item, handleForm, session }) => {
     <Grow in timeout={1500}>
       <form className="form-posts" onSubmit={loading ? null : handleSubmit}>
         <button
-          className="btn bg-white"
+          className="btn"
           type="button"
           onClick={handleForm}
         >

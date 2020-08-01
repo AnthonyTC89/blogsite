@@ -84,7 +84,7 @@ const PostsList = ({ session }) => {
         {loading ? <LoadingGif /> : null}
         {message === '' ? null : <p>{message}</p>}
         <button
-          className="btn bg-white"
+          className="btn"
           type="button"
           onClick={() => handleEdit(defaultPost)}
         >
