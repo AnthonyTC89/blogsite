@@ -53,12 +53,14 @@ A Personal Project with the best practices about JWT. Authentication and Authori
 
   1. clone the repository [blogsite](https://github.com/AnthonyTC89/blogsite)
   2. cd in to the folder and run `npm install`
-  3. create the file `.env` in the root with the next Variables:
+  3. create the file `.env` in the root with the next Variables
+
     *   HTTPS=true
-    *   USERNAME_MONGODB=<user>
-    *   PASSWORD_MONGODB=<password>
-    *   REACT_APP_JWT_SECRET=<secretJWT>
-    *   REACT_APP_FACEBOOK_KEY=<facebookKey>
+    *   USERNAME_MONGODB=`user`
+    *   PASSWORD_MONGODB=`password`
+    *   REACT_APP_JWT_SECRET=`secretJWT`
+    *   REACT_APP_FACEBOOK_KEY=`facebookKey`
+
   4. run `npm build` to have all the files from the react-app.
   5. run `npm start`
   6. go to [localhost:3001](http://localhost:3001)
