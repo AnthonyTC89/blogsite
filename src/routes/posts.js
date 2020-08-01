@@ -1,4 +1,6 @@
+/* eslint-disable camelcase */
 const express = require('express');
+const jwt = require('jsonwebtoken');
 
 const verifyToken = require('../Controllers/verifyToken');
 const Post = require('../models/Post');
@@ -15,27 +17,31 @@ router.get('/api/posts', verifyToken, async (req, res) => {
   }
 });
 
-router.post('/api/posts', async (req, res) => {
-  const { title, text, userID } = req.body;
-  const post = new Post(
-    {
-      title,
-      text,
-      status: true,
-      userID,
-      created_at: Date.now(),
-    },
-  );
-  await post.save();
-  res.json(post);
+router.post('/api/posts', verifyToken, async (req, res) => {
+  try {
+    const { postToken } = req.body;
+    const decoded = jwt.verify(postToken, process.env.REACT_APP_JWT_SECRET);
+    const { title, text, user_id } = decoded;
+    const post = new Post({ title, text, user_id });
+    await post.save();
+    res.sendStatus(201);
+  } catch (err) {
+    res.sendStatus(404);
+  }
 });
 
-router.put('/api/posts/:id', async (req, res) => {
-  const { title, text, status, userID } = req.body;
-  const newPost = { title, text, status, userID };
-  const { id } = req.params;
-  const post = await Post.findByIdAndUpdate(id, newPost);
-  res.json(post);
+router.put('/api/posts/:id', verifyToken, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { postToken } = req.body;
+    const decoded = jwt.verify(postToken, process.env.REACT_APP_JWT_SECRET);
+    const { title, text, status, user_id } = decoded;
+    const newPost = { title, text, status, user_id };
+    await Post.findByIdAndUpdate(id, newPost);
+    res.sendStatus(202);
+  } catch (err) {
+    res.sendStatus(400);
+  }
 });
 
 router.delete('/api/posts/:id', async (req, res) => {

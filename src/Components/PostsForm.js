@@ -25,9 +25,11 @@ const PostsForm = ({ item, handleForm, session }) => {
     setLoading(true);
     setMessage('');
     try {
+      const config = { timeout: 5000, headers: { Authorization: `Bearer ${session.token}` } };
+      const postToken = jwt.sign(post, process.env.REACT_APP_JWT_SECRET);
       const res = post._id == null
-        ? await axios.post('/api/posts/', post, { timeout: 5000 })
-        : await axios.put(`/api/posts/${post._id}`, post, { timeout: 5000 });
+        ? await axios.post('/api/posts/', { postToken }, config)
+        : await axios.put(`/api/posts/${post._id}`, { postToken }, config);
       setPost(res.data);
       setMessage(res.statusText);
     } catch (err) {
@@ -81,7 +83,7 @@ const PostsForm = ({ item, handleForm, session }) => {
             : null}
           {loading ? 'Wait...' : btnText}
         </button>
-        <small>{message}</small>
+        <small className="text-danger">{message}</small>
       </form>
     </Grow>
   );
