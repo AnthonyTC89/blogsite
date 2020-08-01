@@ -6,7 +6,7 @@ import axios from 'axios';
 import jwt from 'jsonwebtoken';
 import updateSession from '../redux/actions/updateSession';
 import FacebookButton from './FacebookButton';
-// import GoogleButton from './GoogleButton';
+import GoogleButton from './GoogleButton';
 import LoadingGif from './LoadingGif';
 import './SignIn.css';
 
@@ -147,7 +147,7 @@ const SignIn = ({ session, history, changeSession, handleComponent }) => {
         <h6>Connect with</h6>
         <div className="form-group social-login">
           <FacebookButton handleLogin={handleLoginFacebook} textButton="Login with Facebook" />
-          {/* <GoogleButton buttonText="Login with Google" /> */}
+          <GoogleButton buttonText="Login with Google" />
         </div>
       </form>
     </Grow>

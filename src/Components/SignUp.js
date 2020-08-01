@@ -6,7 +6,7 @@ import jwt from 'jsonwebtoken';
 import Grow from '@material-ui/core/Grow';
 import updateSession from '../redux/actions/updateSession';
 import FacebookButton from './FacebookButton';
-// import GoogleButton from './GoogleButton';
+import GoogleButton from './GoogleButton';
 import './SignUp.css';
 
 const defaultUser = {
@@ -127,7 +127,7 @@ const SignUp = ({ history, session, handleComponent, changeSession }) => {
         </div>
         <div className="form-group social-login">
           <FacebookButton handleLogin={handleLoginFacebook} textButton="Sign up with Facebook" />
-          {/* <GoogleButton buttonText="Sign up with Google" /> */}
+          <GoogleButton buttonText="Sign up with Google" />
         </div>
       </form>
     </Grow>
