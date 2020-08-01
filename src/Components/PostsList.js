@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 import Grow from '@material-ui/core/Grow';
+import LoadingGif from './LoadingGif';
 import PostsForm from './PostsForm';
 import icons from '../icons.json';
 import './PostsList.css';
@@ -17,13 +18,14 @@ const defaultPost = {
 // eslint-disable-next-line no-unused-vars
 const PostsList = ({ session }) => {
   const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loadingPage, setLoadingPage] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
   const [showForm, setShowForm] = useState(false);
   const [editItem, setEditItem] = useState(defaultPost);
 
   const getPosts = async () => {
-    setLoading(true);
+    setLoadingPage(true);
     setMessage('');
     try {
       const config = {
@@ -38,7 +40,7 @@ const PostsList = ({ session }) => {
     } catch (err) {
       setMessage('error!');
     } finally {
-      setLoading(false);
+      setLoadingPage(false);
     }
   };
 
@@ -71,14 +73,8 @@ const PostsList = ({ session }) => {
     // eslint-disable-next-line
   }, []);
 
-  if (loading) {
-    return (
-      <div className="container text-center">
-        <div className="spinner-border text-primary" role="status">
-          <span className="sr-only">Loading...</span>
-        </div>
-      </div>
-    );
+  if (loadingPage) {
+    return <LoadingGif />;
   }
   if (showForm) {
     return <PostsForm item={editItem} handleForm={handleForm} />;
@@ -87,6 +83,7 @@ const PostsList = ({ session }) => {
     <Grow in timeout={1500}>
       <div className="container text-center">
         <h2> My posts </h2>
+        {loading ? <LoadingGif /> : null}
         <p>{message}</p>
         <button
           className="btn bg-white"

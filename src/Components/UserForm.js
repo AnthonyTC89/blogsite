@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 import Grow from '@material-ui/core/Grow';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import LoadingGif from './LoadingGif';
 import Gravatar from './Gravatar';
 import updateSession from '../redux/actions/updateSession';
 import './UserForm.css';
@@ -78,13 +79,7 @@ const UserForm = ({ session }) => {
   }, []);
 
   if (loadingPage) {
-    return (
-      <div className="container text-center">
-        <div className="spinner-border text-primary" role="status">
-          <span className="sr-only">Loading...</span>
-        </div>
-      </div>
-    );
+    return <LoadingGif />;
   }
   return (
     <Grow in timeout={1500} appear>
