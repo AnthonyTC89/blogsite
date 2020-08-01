@@ -46,8 +46,8 @@ A Personal Project with the best practices about JWT. Authentication and Authori
 
 ### Pre-Installation
 
-  1. npm version 6.14.5 or more
-  2. node version 8.17.0 or more
+  1. npm version 6.14.4 or more
+  2. node version 10.19.0 or more
 
 ### Installation
 
@@ -71,7 +71,7 @@ A Personal Project with the best practices about JWT. Authentication and Authori
   2. `npm react`: Start only the react app without the back-end.
   3. `npm build`: Create the main files of the front-end.
   4. `npm test`: Check the test files of the react app.
-  5. `npm dev`: Similar of "npm start" running with nodemon.
+  5. `npm server`: Similar of "npm start" running with nodemon.
 
 ## Future Features
 
