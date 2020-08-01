@@ -6,7 +6,7 @@ import axios from 'axios';
 import jwt from 'jsonwebtoken';
 import updateSession from '../redux/actions/updateSession';
 import FacebookButton from './FacebookButton';
-import GoogleButton from './GoogleButton';
+// import GoogleButton from './GoogleButton';
 import './SignIn.css';
 
 const defaultUser = {
@@ -25,6 +25,25 @@ const SignIn = ({ history, changeSession, handleComponent }) => {
     setUser((prev) => (
       { ...prev, [e.target.name]: e.target.value }
     ));
+  };
+
+  const handleLoginFacebook = async (response) => {
+    setLoading(true);
+    setMessage('');
+    try {
+      const { name, email } = response;
+      const userFacebook = { username: name, email, password: '' };
+      const userToken = jwt.sign(userFacebook, process.env.REACT_APP_JWT_SECRET);
+      const res = await axios.post('/api/users', { userToken }, { timeout: 5000 });
+      sessionStorage.setItem('userToken', res.data);
+      setLoading(false);
+      setUser(defaultUser);
+      changeSession(res.data);
+      history.push('/posts');
+    } catch (err) {
+      setMessage('Error!');
+      setLoading(false);
+    }
   };
 
   const handleChangeCheckbox = () => {
@@ -119,8 +138,8 @@ const SignIn = ({ history, changeSession, handleComponent }) => {
         </div>
         <h6>Connect with</h6>
         <div className="form-group social-login">
-          <FacebookButton textButton="Login with Facebook" />
-          <GoogleButton buttonText="Login with Google" />
+          <FacebookButton handleLogin={handleLoginFacebook} textButton="Login with Facebook" />
+          {/* <GoogleButton buttonText="Login with Google" /> */}
         </div>
       </form>
     </Grow>

@@ -6,11 +6,6 @@ const router = express.Router();
 const verifyToken = require('../Controllers/verifyToken');
 const User = require('../models/User');
 
-router.get('/api/users', async (req, res) => {
-  const users = await User.find();
-  res.json(users);
-});
-
 router.get('/api/users/:id', verifyToken, async (req, res) => {
   try {
     const { id } = req.params;
@@ -24,20 +19,13 @@ router.get('/api/users/:id', verifyToken, async (req, res) => {
   }
 });
 
-router.post('/api/users', verifyToken, async (req, res) => {
+router.post('/api/users', async (req, res) => {
   try {
     const { userToken } = req.body;
     const decoded = jwt.verify(userToken, process.env.REACT_APP_JWT_SECRET);
     const { username, email, password } = decoded;
     const salt = bcrypt.genSaltSync(10);
-    const user = new User(
-      {
-        username,
-        email,
-        password: bcrypt.hashSync(password, salt),
-        status: true,
-      },
-    );
+    const user = new User({ username, email, password: bcrypt.hashSync(password, salt) });
     await user.save();
     const token = jwt.sign(user.toObject(), process.env.REACT_APP_JWT_SECRET);
     res.status(201).send(token);
