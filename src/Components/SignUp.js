@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import axios from 'axios';
@@ -6,7 +6,7 @@ import jwt from 'jsonwebtoken';
 import Grow from '@material-ui/core/Grow';
 import updateSession from '../redux/actions/updateSession';
 import FacebookButton from './FacebookButton';
-import GoogleButton from './GoogleButton';
+// import GoogleButton from './GoogleButton';
 import './SignUp.css';
 
 const defaultUser = {
@@ -16,7 +16,7 @@ const defaultUser = {
   confirmation: '',
 };
 
-const SignUp = ({ history, handleComponent, changeSession }) => {
+const SignUp = ({ history, session, handleComponent, changeSession }) => {
   const [user, setUser] = useState(defaultUser);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
@@ -26,6 +26,24 @@ const SignUp = ({ history, handleComponent, changeSession }) => {
     setUser((prev) => (
       { ...prev, [e.target.name]: e.target.value }
     ));
+  };
+
+  const handleLoginFacebook = async (response) => {
+    setLoading(true);
+    setMessage('');
+    try {
+      const { name, email } = response;
+      const userFacebook = { username: name, email };
+      const userToken = jwt.sign(userFacebook, process.env.REACT_APP_JWT_SECRET);
+      const res = await axios.post('/api/users/facebook', { userToken }, { timeout: 5000 });
+      sessionStorage.setItem('userToken', res.data);
+      setLoading(false);
+      setUser(defaultUser);
+      changeSession(res.data);
+    } catch (err) {
+      setMessage('Error!');
+      setLoading(false);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -45,6 +63,12 @@ const SignUp = ({ history, handleComponent, changeSession }) => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (session.isLoggedIn) {
+      history.push('/posts');
+    }
+  });
 
   return (
     <Grow in timeout={1500} appear>
@@ -102,8 +126,8 @@ const SignUp = ({ history, handleComponent, changeSession }) => {
           </button>
         </div>
         <div className="form-group social-login">
-          <FacebookButton textButton="Sign up with Facebook" />
-          <GoogleButton buttonText="Sign up with Google" />
+          <FacebookButton handleLogin={handleLoginFacebook} textButton="Sign up with Facebook" />
+          {/* <GoogleButton buttonText="Sign up with Google" /> */}
         </div>
       </form>
     </Grow>
@@ -112,6 +136,7 @@ const SignUp = ({ history, handleComponent, changeSession }) => {
 
 SignUp.propTypes = {
   history: PropTypes.object.isRequired,
+  session: PropTypes.object.isRequired,
   changeSession: PropTypes.func.isRequired,
   handleComponent: PropTypes.func.isRequired,
 };

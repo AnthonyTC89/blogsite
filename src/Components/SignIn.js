@@ -7,6 +7,7 @@ import jwt from 'jsonwebtoken';
 import updateSession from '../redux/actions/updateSession';
 import FacebookButton from './FacebookButton';
 // import GoogleButton from './GoogleButton';
+import LoadingGif from './LoadingGif';
 import './SignIn.css';
 
 const defaultUser = {
@@ -17,6 +18,7 @@ const defaultUser = {
 const SignIn = ({ session, history, changeSession, handleComponent }) => {
   const [user, setUser] = useState(defaultUser);
   const [rememberMe, setRememberMe] = useState(false);
+  const [loadingPage, setLoadingPage] = useState(true);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
 
@@ -87,9 +89,13 @@ const SignIn = ({ session, history, changeSession, handleComponent }) => {
       history.push('/posts');
     } else {
       checkStorage();
+      setLoadingPage(false);
     }
   });
 
+  if (loadingPage) {
+    return <LoadingGif />;
+  }
   return (
     <Grow in timeout={1500}>
       <form className="form-signin" onSubmit={loading ? null : handleSubmit}>
