@@ -41,6 +41,7 @@ const SignIn = ({ session, history, changeSession, handleComponent }) => {
       setLoading(false);
       setUser(defaultUser);
       changeSession(res.data);
+      history.push('/posts');
     } catch (err) {
       setMessage('Error!');
       setLoading(false);
@@ -65,6 +66,7 @@ const SignIn = ({ session, history, changeSession, handleComponent }) => {
       setLoading(false);
       setUser(defaultUser);
       changeSession(res.data);
+      history.push('/posts');
     } catch (err) {
       setMessage('Error!');
       setLoading(false);
@@ -77,21 +79,19 @@ const SignIn = ({ session, history, changeSession, handleComponent }) => {
       try {
         jwt.verify(userToken, process.env.REACT_APP_JWT_SECRET);
         changeSession(userToken);
+        history.push('/posts');
       } catch (err) {
         sessionStorage.clear();
         localStorage.clear();
       }
     }
+    setLoadingPage(false);
   };
 
   useEffect(() => {
-    if (session.isLoggedIn) {
-      history.push('/posts');
-    } else {
       checkStorage();
-      setLoadingPage(false);
-    }
-  });
+      // eslint-disable-next-line
+  }, []);
 
   if (loadingPage) {
     return <LoadingGif />;

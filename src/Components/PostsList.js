@@ -15,7 +15,6 @@ const defaultPost = {
   text: '',
 };
 
-// eslint-disable-next-line no-unused-vars
 const PostsList = ({ session }) => {
   const [posts, setPosts] = useState([]);
   const [loadingPage, setLoadingPage] = useState(true);
